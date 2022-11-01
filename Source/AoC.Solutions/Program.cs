@@ -8,7 +8,7 @@ namespace AoC.Solutions
         {
 
 
-            D10 s = new AoC.Solutions.Y2015.D10(File.ReadAllLines("Inputs/Y2015D10.txt"));
+            D11 s = new AoC.Solutions.Y2015.D11(File.ReadAllLines("Inputs/Y2015D11.txt"));
             s.SolveAndWriteLine();
 
 

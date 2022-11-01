@@ -3,7 +3,7 @@ using CoUtilities.Extensions;
 
 namespace AoC.Solutions.Y2015
 {
-    public class D09 : AoCPuzzle
+    public class D09 : AoCPuzzle<int>
     {
         public D09(string[] input) : base(input, 2015, 9)
         { }

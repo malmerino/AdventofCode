@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AoC.Solutions.Y2015
 {
-    public class D10 : AoCPuzzle
+    public class D10 : AoCPuzzle<int>
     {
         public D10(string[] input) : base(input, 2015, 10)
         {

@@ -1,6 +1,6 @@
 ﻿namespace AoC.Solutions.Y2015
 {
-    public class D07 : AoCPuzzle
+    public class D07 : AoCPuzzle<int>
     {
         public D07(string[] input) : base(input, 2015,7)
         {
