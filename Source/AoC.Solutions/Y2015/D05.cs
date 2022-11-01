@@ -11,7 +11,7 @@ namespace AoC.Solutions.Y2015
         public override int SolvePuzzleA()
         {
             int numberOfGoodStrings = 0;
-            foreach (var input in Input) if (IsNiceStringA(input)) numberOfGoodStrings++;
+            foreach (string input in Input) if (IsNiceStringA(input)) numberOfGoodStrings++;
             return numberOfGoodStrings;
 
         }
