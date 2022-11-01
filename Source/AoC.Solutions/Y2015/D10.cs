@@ -15,41 +15,33 @@ namespace AoC.Solutions.Y2015
 
         public override int SolvePuzzleA()
         {
-            string answer = GetInputAsString;
+            List<char> answer = GetInputAsString.ToCharArray().ToList();
             for (int _ = 0; _ < 40; _++)
             {
-                Stopwatch sw = Stopwatch.StartNew();
-                LookAndSaySequence(ref answer);
-                Console.WriteLine(_ + $" : {sw.Elapsed}");
-
-
+                answer = LookAndSaySequence(answer);
             }
-            return answer.Length;
+            return answer.Count;
         }
 
         public override int SolvePuzzleB()
         {
-            string answer = GetInputAsString;
+            List<char> answer = GetInputAsString.ToCharArray().ToList();
             for (int _ = 0; _ < 50; _++)
             {
-                Stopwatch sw = Stopwatch.StartNew();
-
-                LookAndSaySequence(ref answer);
-                Console.WriteLine(_ + $" : {sw.Elapsed}");
+                answer = LookAndSaySequence(answer);
             }
-            return answer.Length;
+            return answer.Count;
         }
 
 
-        private void LookAndSaySequence(ref string input)
+        private List<char> LookAndSaySequence(IReadOnlyList<char> input)
         {
-            char[] value = input.ToCharArray();
 
-            List<char> result = new List<char>();
+            List<char> result = new();
             int tempIncrement = 1;
-            for (int i = 0; i < value.Length; i++)
+            for (int i = 0; i < input.Count; i++)
             {
-                if (i + 1 < value.Length && value[i] == value[i + 1])
+                if (i + 1 < input.Count && input[i] == input[i + 1])
                 {
                     // Proceed and increment
                     tempIncrement++;
@@ -57,14 +49,13 @@ namespace AoC.Solutions.Y2015
                 else
                 {
                     // End this and start next
-                    result.AddRange($"{tempIncrement}{value[i]}");
+                    result.AddRange($"{tempIncrement}{input[i]}");
 
                     tempIncrement = 1;
                 }
-
             }
 
-            input = result.Aggregate("", (sum, add) => sum + add);
+            return result;
         }
     }
 }
