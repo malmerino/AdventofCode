@@ -2,7 +2,7 @@
 {
     public class D09 : AoCPuzzle
     {
-        public D09(string[] input) : base(input)
+        public D09(string[] input) : base(input, 2015,9)
         {
         }
 

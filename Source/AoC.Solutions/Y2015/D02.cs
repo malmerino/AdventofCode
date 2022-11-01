@@ -2,35 +2,29 @@
 {
     public class D02 : AoCPuzzle
     {
-        public D02(string[] input) : base(input)
+        public D02(string[] input) : base(input,2015,2)
         { }
 
         public override int SolvePuzzleA()
         {
-            List<Box> boxes = InterpretInput(Input);
+            IEnumerable<Box> boxes = InterpretInput(Input);
             return boxes.Aggregate(0, (total, box) => total + (CalculateSurfaceArea(box) + CalculateExtraPaperForElves(box)));
         }
 
         public override int SolvePuzzleB()
         {
-            List<Box> boxes = InterpretInput(Input);
+            IEnumerable<Box> boxes = InterpretInput(Input);
             return boxes.Aggregate(0, (total, box) => total + (CalculateBoxVolume(box) + CalculateRibbonLength(box)));
         }
 
 
-        private List<Box> InterpretInput(string[] input)
+        private IEnumerable<Box> InterpretInput(string[] input)
         {
-            List<Box> boxes = new List<Box>();
-
-            foreach (string row in Input)
-            {
-                boxes.Add(InterpretInputRow(row));
-            }
-            return boxes;
+            return Input.Select(InterpretInputRow).ToList();
         }
 
 
-        private Box InterpretInputRow(string row)
+        private static Box InterpretInputRow(string row)
         {
             string[] rowContents = row.Split('x');
             int[] rowParsedContents = rowContents.Select(x => int.Parse(x)).ToArray();
@@ -38,7 +32,7 @@
         }
 
 
-        private int CalculateSurfaceArea(Box box)
+        private static int CalculateSurfaceArea(Box box)
         {
             return
                 (2 * box.Length * box.Width) +
@@ -46,21 +40,21 @@
                 (2 * box.Height * box.Length);
         }
 
-        private int CalculateExtraPaperForElves(Box box)
+        private static int CalculateExtraPaperForElves(Box box)
         {
             int[] surfaces = { box.Length * box.Width, box.Width * box.Height, box.Height * box.Length };
             return surfaces.Min();
         }
 
 
-        private int CalculateRibbonLength(Box box)
+        private static int CalculateRibbonLength(Box box)
         {
             int[] surfaces = { 2 * box.Length + 2 * box.Width, 2 * box.Width + 2 * box.Height, 2 * box.Height + 2 * box.Length };
 
             return surfaces.Min();
         }
 
-        private int CalculateBoxVolume(Box box)
+        private static int CalculateBoxVolume(Box box)
         {
             return box.Length * box.Width * box.Height;
         }
@@ -68,9 +62,9 @@
 
         private struct Box
         {
-            public int Length;
-            public int Width;
-            public int Height;
+            public readonly int Length;
+            public readonly int Width;
+            public readonly int Height;
 
             public Box(int length, int width, int height)
             {

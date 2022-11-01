@@ -2,9 +2,9 @@
 
 namespace AoC.Solutions.Y2015
 {
-    internal class D04 : AoCPuzzle
+    public class D04 : AoCPuzzle
     {
-        public D04(string[] input) : base(input)
+        public D04(string[] input) : base(input,2015,4)
         {
         }
 
