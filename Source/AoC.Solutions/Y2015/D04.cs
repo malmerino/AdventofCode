@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
+﻿using System.Text;
 
-namespace AoC.Y2015
+namespace AoC.Solutions.Y2015
 {
     internal class D04 : AoCPuzzle
     {
