@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AoC.Y2015
@@ -22,50 +23,15 @@ namespace AoC.Y2015
 
         public override int SolvePuzzleB()
         {
-            int numberOfGoodStrings = 0;
-            foreach (var input in Input) if (IsNiceStringB(input)) numberOfGoodStrings++;
-            return numberOfGoodStrings;
+            return Input.Count(IsNiceStringB);
         }
 
 
         private bool IsNiceStringB(string input)
         {
-            List<CharacterPair> possiblePairs = new List<CharacterPair>();
-
-            for (int i = 0; i < input.Length - 1; i++)
-            {
-                bool proceed = true;
-
-                if (possiblePairs.Any(x => x.PairContent == "" + input[i] + input[i + 1]))
-                {
-                    foreach (var item in possiblePairs.Where(x => x.PairContent == $"{input[i]}{input[i + 1]}"))
-                    {
-                        if (item.IndexAtA == i || item.IndexAtB == i)
-                        {
-                            proceed = false;
-                            break;
-                        }
-                    }
-                }
-                if (proceed)
-                    possiblePairs.Add(new CharacterPair("" + input[i] + input[i + 1], i, i + 1));
-            }
-
-            if (possiblePairs.GroupBy(x => x.PairContent).Where(g => g.Count() > 1).Count() < 1) return false;
-
-            bool conditionBMet = false;
-            char previousCharB = input[0];
-            for (int i = 1; i < input.Length - 1; i++)
-            {
-                if (input[i + 1] == previousCharB && input[i + 1] != input[i])
-                {
-                    conditionBMet = true;
-                }
-                else previousCharB = input[i];
-            }
-            if (!conditionBMet) return false;
-
-            return true;
+            string regex1 = @"(..).*\1";
+            string regex2 = @"(.).\1";
+            return Regex.IsMatch(input, regex1) && Regex.IsMatch(input, regex2);
         }
 
 
