@@ -24,9 +24,9 @@
         public void SolveAndWriteLine()
         {
             int a = SolvePuzzleA();
-            int b = SolvePuzzleB();
-
             Console.WriteLine($"Solve Year {Year} Day {Day} [A]: {a}");
+
+            int b = SolvePuzzleB();
             Console.WriteLine($"Solve Year {Year} Day {Day} [B]: {b}");
         }
 
