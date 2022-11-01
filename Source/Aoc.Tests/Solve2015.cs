@@ -92,6 +92,13 @@ namespace Aoc.Tests
             s.SolveAndWriteLine();
             Assert.True(true);
         }
+        [TestCase("Inputs\\Y2015D12.txt")]
+        public void SolveDay12(string input)
+        {
+            D12 s = new AoC.Solutions.Y2015.D12(File.ReadAllLines(input));
+            s.SolveAndWriteLine();
+            Assert.True(true);
+        }
 
 
 

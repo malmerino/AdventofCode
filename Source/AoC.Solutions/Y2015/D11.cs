@@ -15,7 +15,7 @@ namespace AoC.Solutions.Y2015
 
         public override string SolvePuzzleA()
         {
-           return PasswordGenerator(GetInputAsString);
+            return PasswordGenerator(GetInputAsString);
         }
 
         public override string SolvePuzzleB()
@@ -27,7 +27,6 @@ namespace AoC.Solutions.Y2015
 
         private string PasswordGenerator(string currentPassword)
         {
-            //cqjxxxyz
             char[] password = currentPassword.ToCharArray();
             while (true)
             {
@@ -46,16 +45,13 @@ namespace AoC.Solutions.Y2015
                 bool repeatPass = false;
                 for (int i = 0; i < password.Length - 2; i++)
                 {
-                    if (password[i] + 1 == password[i + 1] &&
-                        password[i + 1] + 1 == password[i + 2])
-                    {
-                        repeatPass = true;
-                        break;
-                    }
+                    if (password[i] + 1 != password[i + 1] || password[i + 1] + 1 != password[i + 2]) continue;
+                    repeatPass = true;
+                    break;
                 }
 
                 bool prohibitedChars = true;
-                List<char> prohibitedLetters = new List<char> { 'i', 'o', 'l' };
+                List<char> prohibitedLetters = new() { 'i', 'o', 'l' };
                 if (password.Any(x => prohibitedLetters.Contains(x)))
                 {
                     prohibitedChars = false;
@@ -65,11 +61,9 @@ namespace AoC.Solutions.Y2015
                 int occurrences = 0;
                 for (int i = 0; i < password.Length - 1; i++)
                 {
-                    if (password[i] == password[i + 1])
-                    {
-                        i++;
-                        occurrences++;
-                    }
+                    if (password[i] != password[i + 1]) continue;
+                    i++;
+                    occurrences++;
                 }
 
                 if (occurrences >= 2) doubleChars = true;
