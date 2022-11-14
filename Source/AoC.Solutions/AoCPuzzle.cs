@@ -24,12 +24,12 @@ namespace AoC.Solutions
             Stopwatch sw = Stopwatch.StartNew();
 
             object a = puzzle.SolvePuzzleA(input);
-            Console.WriteLine($"Solve Year {puzzle.Year} Day {puzzle.Day} [A]: {a} | Took: {sw}");
+            Console.WriteLine($"Solve Year {puzzle.Year} Day {puzzle.Day} [A]: {a} | Took: {sw.Elapsed}");
 
             sw.Restart();
 
             object b = puzzle.SolvePuzzleB(input);
-            Console.WriteLine($"Solve Year {puzzle.Year} Day {puzzle.Day} [B]: {b} | Took: {sw}");
+            Console.WriteLine($"Solve Year {puzzle.Year} Day {puzzle.Day} [B]: {b} | Took: {sw.Elapsed}");
 
             sw.Stop();
 
