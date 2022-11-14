@@ -1,5 +1,5 @@
 ﻿using System.Text.RegularExpressions;
-using CoUtilities.Extensions;
+using SpaceStation.Utilities.LINQ;
 
 namespace AoC.Solutions.Y2015
 {
