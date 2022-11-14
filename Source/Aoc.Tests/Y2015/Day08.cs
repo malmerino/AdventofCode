@@ -15,7 +15,7 @@ namespace Aoc.Tests.Y2015
 
         public override void Setup()
         {
-            Puzzle = new AoC.Solutions.Y2015.D02();
+            Puzzle = new AoC.Solutions.Y2015.D08();
         }
 
         [Test]

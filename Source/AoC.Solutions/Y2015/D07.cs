@@ -8,13 +8,13 @@
 
         public override object SolvePuzzleA(string input)
         {
-            return EvaluateRow("a", LoadInstructions(input.Split('\n')));
+            return EvaluateRow("a", LoadInstructions(input.Split("\r\n")));
         }
 
         public override object SolvePuzzleB(string input)
         {
-            ushort value = EvaluateRow("a", LoadInstructions(input.Split('\n')));
-            Dictionary<string, string[]> bitwiseInstructions = LoadInstructions(input.Split('\n'));
+            ushort value = EvaluateRow("a", LoadInstructions(input.Split("\r\n")));
+            Dictionary<string, string[]> bitwiseInstructions = LoadInstructions(input.Split("\r\n"));
 
             bitwiseInstructions["b"] = new string[] { "" + value, "->", "b" };
 
