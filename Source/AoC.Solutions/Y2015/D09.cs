@@ -3,27 +3,27 @@ using SpaceStation.Utilities.LINQ;
 
 namespace AoC.Solutions.Y2015
 {
-    public class D09 : AoCPuzzle<int>
+    public class D09 : AoCPuzzle
     {
-        public D09(string[] input) : base(input, 2015, 9)
+        public D09() : base( 2015, 9)
         { }
 
-        public override int SolvePuzzleA()
+        public override object SolvePuzzleA(string input)
         {
-            List<Path> paths = PermutationAndTransformRoutes();
+            List<Path> paths = PermutationAndTransformRoutes(input.Split('\n'));
             return paths.Min(x=> x.Distance);
         }
 
-        public override int SolvePuzzleB()
+        public override object SolvePuzzleB(string input)
         {
-            List<Path> paths = PermutationAndTransformRoutes();
+            List<Path> paths = PermutationAndTransformRoutes(input.Split('\n'));
             return paths.Max(x => x.Distance);
         }
 
 
-        private List<Path> PermutationAndTransformRoutes()
+        private List<Path> PermutationAndTransformRoutes(string[] input)
         {
-            List<Route> routeList = Input.Select(RouteFromString).ToList();
+            List<Route> routeList = input.Select(RouteFromString).ToList();
 
             List<string> uniqueLocations = routeList.Select(x => x.Start)
                 .Concat(routeList.Select(x => x.End))

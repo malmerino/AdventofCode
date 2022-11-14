@@ -1,40 +1,32 @@
 ﻿namespace AoC.Solutions.Y2015
 {
-    public class D07 : AoCPuzzle<int>
+    public class D07 : AoCPuzzle
     {
-        public D07(string[] input) : base(input, 2015,7)
+        public D07() : base(2015, 7)
         {
         }
 
-        public override int SolvePuzzleA()
+        public override object SolvePuzzleA(string input)
         {
-            return EvaluateRow("a", LoadInstructions());
+            return EvaluateRow("a", LoadInstructions(input.Split('\n')));
         }
 
-        public override int SolvePuzzleB()
+        public override object SolvePuzzleB(string input)
         {
-            ushort value = EvaluateRow("a", LoadInstructions());
-            Dictionary<string, string[]> bitwiseInstructions = LoadInstructions();
+            ushort value = EvaluateRow("a", LoadInstructions(input.Split('\n')));
+            Dictionary<string, string[]> bitwiseInstructions = LoadInstructions(input.Split('\n'));
 
             bitwiseInstructions["b"] = new string[] { "" + value, "->", "b" };
 
             return EvaluateRow("a", bitwiseInstructions);
         }
 
-        private Dictionary<string, string[]> LoadInstructions()
+        private static Dictionary<string, string[]> LoadInstructions(IEnumerable<string> input)
         {
-            Dictionary<string, string[]> bitwiseInstructions = new Dictionary<string, string[]>();
-
-            foreach (string row in Input)
-            {
-                string[] data = row.Split(' ');
-                bitwiseInstructions.Add(data.Last(), data);
-            }
-
-            return bitwiseInstructions;
+            return input.Select(row => row.Split(' ')).ToDictionary(data => data.Last());
         }
 
-        private ushort EvaluateRow(string input, IDictionary<string, string[]> instructions)
+        private static ushort EvaluateRow(string input, IDictionary<string, string[]> instructions)
         {
             // Returns value if row entry is resolved
             if (ushort.TryParse(input, out ushort value)) return value;

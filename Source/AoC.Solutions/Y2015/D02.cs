@@ -1,26 +1,26 @@
 ﻿namespace AoC.Solutions.Y2015
 {
-    public class D02 : AoCPuzzle<int>
+    public class D02 : AoCPuzzle
     {
-        public D02(string[] input) : base(input,2015,2)
+        public D02() : base(2015, 2)
         { }
 
-        public override int SolvePuzzleA()
+
+        public override object SolvePuzzleA(string input)
         {
-            IEnumerable<Box> boxes = InterpretInput(Input);
+            IEnumerable<Box> boxes = InterpretInput(input);
             return boxes.Aggregate(0, (total, box) => total + (CalculateSurfaceArea(box) + CalculateExtraPaperForElves(box)));
         }
 
-        public override int SolvePuzzleB()
+        public override object SolvePuzzleB(string input)
         {
-            IEnumerable<Box> boxes = InterpretInput(Input);
+            IEnumerable<Box> boxes = InterpretInput(input);
             return boxes.Aggregate(0, (total, box) => total + (CalculateBoxVolume(box) + CalculateRibbonLength(box)));
         }
-
-
-        private IEnumerable<Box> InterpretInput(string[] input)
+        
+        private static IEnumerable<Box> InterpretInput(string input)
         {
-            return Input.Select(InterpretInputRow).ToList();
+            return input.Split('\n').Select(InterpretInputRow).ToList();
         }
 
 
@@ -73,5 +73,6 @@
                 Height = height;
             }
         }
+
     }
 }

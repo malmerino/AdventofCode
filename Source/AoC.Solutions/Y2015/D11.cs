@@ -7,25 +7,25 @@ using System.Threading.Tasks;
 
 namespace AoC.Solutions.Y2015
 {
-    public class D11 : AoCPuzzle<string>
+    public class D11 : AoCPuzzle
     {
-        public D11(string[] input) : base(input, 2015, 11)
+        public D11() : base(2015, 11)
         { }
 
 
-        public override string SolvePuzzleA()
+        public override object SolvePuzzleA(string input)
         {
-            return PasswordGenerator(GetInputAsString);
+            return PasswordGenerator(input);
         }
 
-        public override string SolvePuzzleB()
+        public override object SolvePuzzleB(string input)
         {
-            return PasswordGenerator(SolvePuzzleA());
+            return PasswordGenerator(SolvePuzzleA(input) as string ?? string.Empty);
         }
 
 
 
-        private string PasswordGenerator(string currentPassword)
+        private static string PasswordGenerator(string currentPassword)
         {
             char[] password = currentPassword.ToCharArray();
             while (true)

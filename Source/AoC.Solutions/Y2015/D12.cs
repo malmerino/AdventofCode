@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace AoC.Solutions.Y2015
 {
-    public class D12 : AoCPuzzle<int>
+    public class D12 : AoCPuzzle
     {
-        public D12(string[] input) : base(input, 2015, 12)
+        public D12() : base( 2015, 12)
         { }
 
 
-        public override int SolvePuzzleA()
+        public override object SolvePuzzleA(string input)
         {
             string pattern = @"(-{0,1}\d{1,10})";
-            Match matches = Regex.Match(GetInputAsString, pattern);
+            Match matches = Regex.Match(input, pattern);
 
             
             int val = 0;
@@ -37,7 +37,7 @@ namespace AoC.Solutions.Y2015
             return val;
         }
 
-        public override int SolvePuzzleB()
+        public override object SolvePuzzleB(string input)
         {
             return 0;
         }

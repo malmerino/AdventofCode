@@ -1,40 +1,41 @@
 ﻿namespace AoC.Solutions.Y2015
 {
-    public class D06 : AoCPuzzle<int>
+    public class D06 : AoCPuzzle
     {
-        public D06(string[] input) : base(input, 2015,6)
+        public D06() : base(2015, 6)
         {
         }
 
-        public override int SolvePuzzleA()
+        public override object SolvePuzzleA(string input)
         {
             int[,] grid = new int[1000, 1000];
             Fill2DIntegerArray(ref grid);
 
-            foreach (string row in Input)
+            
+            foreach (string row in input.Split('\n'))
             {
                 InterpretInstructions(row, ref grid, false);
             }
 
 
-            return (from int item in grid where item == 1 select item).Count();
+            return grid.Cast<int>().Count(item => item == 1);
         }
 
-        public override int SolvePuzzleB()
+        public override object SolvePuzzleB(string input)
         {
             int[,] grid = new int[1000, 1000];
             Fill2DIntegerArray(ref grid);
 
-            foreach (string row in Input)
+            foreach (string row in input.Split('\n'))
             {
                 InterpretInstructions(row, ref grid, true);
             }
 
-            return (from int item in grid select item).Aggregate(0, (total, gridValue) => total + gridValue);
+            return grid.Cast<int>().Select(item => item).Aggregate(0, (total, gridValue) => total + gridValue);
         }
 
 
-        private static void InterpretInstructions(string inputRow, ref int[,] grid, bool instructionsForPuzzleB)
+        private static void InterpretInstructions(string inputRow, ref int[,] grid, bool useInstructionsForPuzzleB)
         {
             string[] rowContents = inputRow.Split(' ');
             bool validInstruction = false;
@@ -42,52 +43,52 @@
             switch (rowContents.Length)
             {
                 case 4:
-                {
-                    if (rowContents[0] == "toggle")
                     {
-                        GetStartEndPositions(rowContents[1], rowContents[3], out int[] startPos, out int[] endPos);
-                        validInstruction = true;
-                        for (int x = startPos[0]; x <= endPos[0]; x++)
+                        if (rowContents[0] == "toggle")
                         {
-                            for (int y = startPos[1]; y <= endPos[1]; y++)
+                            GetStartEndPositions(rowContents[1], rowContents[3], out int[] startPos, out int[] endPos);
+                            validInstruction = true;
+                            for (int x = startPos[0]; x <= endPos[0]; x++)
                             {
-                                if (instructionsForPuzzleB) grid[x, y] += 2;
-                                else grid[x, y] = Flip(grid[x, y]);
+                                for (int y = startPos[1]; y <= endPos[1]; y++)
+                                {
+                                    if (useInstructionsForPuzzleB) grid[x, y] += 2;
+                                    else grid[x, y] = Flip(grid[x, y]);
+                                }
                             }
                         }
-                    }
 
-                    break;
-                }
+                        break;
+                    }
                 case 5:
-                {
-                    if (rowContents[0] == "turn")
                     {
-                        validInstruction = true;
-                        bool turnOn = rowContents[1] == "on";
-                        GetStartEndPositions(rowContents[2], rowContents[4], out int[] startPos, out int[] endPos);
-
-                        for (int x = startPos[0]; x <= endPos[0]; x++)
+                        if (rowContents[0] == "turn")
                         {
-                            for (int y = startPos[1]; y <= endPos[1]; y++)
-                            {
-                                if (instructionsForPuzzleB)
-                                {
-                                    if (turnOn) grid[x, y]++;
-                                    else grid[x, y]--;
+                            validInstruction = true;
+                            bool turnOn = rowContents[1] == "on";
+                            GetStartEndPositions(rowContents[2], rowContents[4], out int[] startPos, out int[] endPos);
 
-                                    if (grid[x, y] < 0) grid[x, y] = 0;
-                                }
-                                else
+                            for (int x = startPos[0]; x <= endPos[0]; x++)
+                            {
+                                for (int y = startPos[1]; y <= endPos[1]; y++)
                                 {
-                                    grid[x, y] = turnOn ? 1 : 0;
+                                    if (useInstructionsForPuzzleB)
+                                    {
+                                        if (turnOn) grid[x, y]++;
+                                        else grid[x, y]--;
+
+                                        if (grid[x, y] < 0) grid[x, y] = 0;
+                                    }
+                                    else
+                                    {
+                                        grid[x, y] = turnOn ? 1 : 0;
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    break;
-                }
+                        break;
+                    }
                 default:
                     throw new Exception(rowContents[0] + " is an unknown instruction");
             }

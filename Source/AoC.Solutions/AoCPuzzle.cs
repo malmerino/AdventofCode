@@ -1,4 +1,6 @@
-﻿namespace AoC.Solutions
+﻿using System.Diagnostics;
+
+namespace AoC.Solutions
 {
     public abstract class AoCPuzzle
     {
@@ -13,7 +15,26 @@
         }
 
 
-        public abstract object SolvePuzzleA(string entry);
-        public abstract object SolvePuzzleB(string entry);
+        public abstract object SolvePuzzleA(string input);
+        public abstract object SolvePuzzleB(string input);
+
+
+        public static void SolveVerbose(AoCPuzzle puzzle, string input)
+        {
+            Stopwatch sw = Stopwatch.StartNew();
+
+            object a = puzzle.SolvePuzzleA(input);
+            Console.WriteLine($"Solve Year {puzzle.Year} Day {puzzle.Day} [A]: {a} | Took: {sw}");
+
+            sw.Restart();
+
+            object b = puzzle.SolvePuzzleB(input);
+            Console.WriteLine($"Solve Year {puzzle.Year} Day {puzzle.Day} [B]: {b} | Took: {sw}");
+
+            sw.Stop();
+
+            Console.WriteLine($"Type: ({a.GetType()})");
+
+        }
     }
 }

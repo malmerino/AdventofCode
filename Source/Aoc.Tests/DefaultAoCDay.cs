@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AoC.Solutions;
 
 namespace Aoc.Tests
 {
@@ -14,17 +15,21 @@ namespace Aoc.Tests
         }
 
         public string FileContent { get; protected set; }
+        public AoCPuzzle Puzzle { get; protected set; }
 
         [SetUp]
         public abstract void Setup();
 
+        [Test]
+        public abstract void SampleTestA();
 
         [Test]
-        public abstract void SampleTest();
+        public abstract void SampleTestB();
 
 
         [Test]
-        public abstract void RealTest();
+        public void RealTest() => AoCPuzzle.SolveVerbose(Puzzle, FileContent);
+
 
     }
 }

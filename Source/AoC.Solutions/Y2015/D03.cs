@@ -1,18 +1,18 @@
 ﻿namespace AoC.Solutions.Y2015
 {
-    public class D03 : AoCPuzzle<int>
+    public class D03 : AoCPuzzle
     {
-        public D03(string[] input) : base(input,2015,3)
+        public D03() : base(2015,3)
         { }
 
-        public override int SolvePuzzleA()
+        public override object SolvePuzzleA(string input)
         {
-            List<House> houses = new List<House>();
+            List<House> houses = new();
 
             int dPosX = 0, dPosY = 0;
             houses.Add(new House(dPosX, dPosY) { GiftsReceived = 1 });
 
-            foreach (char t in GetInputAsString)
+            foreach (char t in input)
             {
                 Move(ref dPosX, ref dPosY, t);
                 HouseTracker(houses, dPosX, dPosY);
@@ -21,26 +21,26 @@
             return houses.Count;
         }
 
-        public override int SolvePuzzleB()
+        public override object SolvePuzzleB(string input)
         {
             List<House> houses = new List<House>();
 
-            int SdPosX = 0, SdPosY = 0;
-            int RdPosX = 0, RdPosY = 0;
+            int sdPosX = 0, sdPosY = 0;
+            int rdPosX = 0, rdPosY = 0;
 
-            houses.Add(new House(SdPosX, SdPosY) { GiftsReceived = 2 });
+            houses.Add(new House(sdPosX, sdPosY) { GiftsReceived = 2 });
 
-            for (int i = 0; i < GetInputAsString.Length; i++)
+            for (int i = 0; i < input.Length; i++)
             {
                 if (i % 2 == 0)
                 {
-                    Move(ref SdPosX, ref SdPosY, GetInputAsString[i]);
-                    HouseTracker(houses, SdPosX, SdPosY);
+                    Move(ref sdPosX, ref sdPosY, input[i]);
+                    HouseTracker(houses, sdPosX, sdPosY);
                 }
                 else
                 {
-                    Move(ref RdPosX, ref RdPosY, GetInputAsString[i]);
-                    HouseTracker(houses, RdPosX, RdPosY);
+                    Move(ref rdPosX, ref rdPosY, input[i]);
+                    HouseTracker(houses, rdPosX, rdPosY);
                 }
 
             }
@@ -57,13 +57,13 @@
             else if (operation == '<') xPos--;
         }
 
-        private static void HouseTracker(List<House> visitedLocations, int dposX, int dposY)
+        private static void HouseTracker(ICollection<House> visitedLocations, int dPositionX, int dPositionY)
         {
-            if (visitedLocations.Any(house => house.X == dposX && house.Y == dposY))
+            if (visitedLocations.Any(house => house.X == dPositionX && house.Y == dPositionY))
             {
-                visitedLocations.First(house => house.X == dposX && house.Y == dposY).GiftsReceived++;
+                visitedLocations.First(house => house.X == dPositionX && house.Y == dPositionY).GiftsReceived++;
             }
-            else visitedLocations.Add(new House(dposX, dposY) { GiftsReceived = 1 });
+            else visitedLocations.Add(new House(dPositionX, dPositionY) { GiftsReceived = 1 });
         }
 
 

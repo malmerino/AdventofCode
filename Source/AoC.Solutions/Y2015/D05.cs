@@ -2,23 +2,18 @@
 
 namespace AoC.Solutions.Y2015
 {
-    public class D05 : AoCPuzzle<int>
+    public class D05 : AoCPuzzle
     {
-        public D05(string[] input) : base(input, 2015,5)
+        public D05() : base(2015, 5) { }
+
+        public override object SolvePuzzleA(string input)
         {
+            return input.Split('\n').Count(IsNiceStringA);
         }
 
-        public override int SolvePuzzleA()
+        public override object SolvePuzzleB(string input)
         {
-            int numberOfGoodStrings = 0;
-            foreach (string input in Input) if (IsNiceStringA(input)) numberOfGoodStrings++;
-            return numberOfGoodStrings;
-
-        }
-
-        public override int SolvePuzzleB()
-        {
-            return Input.Count(IsNiceStringB);
+            return input.Split('\n').Count(IsNiceStringB);
         }
 
 
@@ -56,25 +51,5 @@ namespace AoC.Solutions.Y2015
 
             return true;
         }
-
-
-        private struct CharacterPair
-        {
-            public string PairContent;
-            public int IndexAtA;
-            public int IndexAtB;
-
-            public CharacterPair(string pairContent, int indexA, int indexB)
-            {
-                PairContent = pairContent;
-                IndexAtA = indexA;
-                IndexAtB = indexB;
-            }
-        }
-
-
-
-
-
     }
 }

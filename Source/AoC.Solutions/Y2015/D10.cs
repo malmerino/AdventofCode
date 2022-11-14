@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace AoC.Solutions.Y2015
 {
-    public class D10 : AoCPuzzle<int>
+    public class D10 : AoCPuzzle
     {
-        public D10(string[] input) : base(input, 2015, 10)
+        public D10() : base( 2015, 10)
         {
         }
 
-        public override int SolvePuzzleA()
+        public override object SolvePuzzleA(string input)
         {
-            List<char> answer = GetInputAsString.ToCharArray().ToList();
+            List<char> answer = input.ToCharArray().ToList();
             for (int _ = 0; _ < 40; _++)
             {
                 answer = LookAndSaySequence(answer);
@@ -23,9 +23,9 @@ namespace AoC.Solutions.Y2015
             return answer.Count;
         }
 
-        public override int SolvePuzzleB()
+        public override object SolvePuzzleB(string input)
         {
-            List<char> answer = GetInputAsString.ToCharArray().ToList();
+            List<char> answer = input.ToCharArray().ToList();
             for (int _ = 0; _ < 50; _++)
             {
                 answer = LookAndSaySequence(answer);

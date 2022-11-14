@@ -2,36 +2,40 @@
 
 namespace AoC.Solutions.Y2015
 {
-    public class D08 : AoCPuzzle<int>
+    public class D08 : AoCPuzzle
     {
-        public D08(string[] input) : base(input, 2015,8)
+        public D08() : base(2015, 8)
         {
         }
 
-        public override int SolvePuzzleA()
+        public override object SolvePuzzleA(string input)
         {
-            int lengthReal = Input.Aggregate(0, (total, value) => total + value.Length);
-            int lengthUnEscaped = Input.Aggregate(0, (total, value) => total + Regex.Unescape(value).Length - 2);
+            string[] split = input.Split('\n');
+
+            int lengthReal = split.Aggregate(0, (total, value) => total + value.Length);
+            int lengthUnEscaped = split.Aggregate(0, (total, value) => total + Regex.Unescape(value).Length - 2);
             return lengthReal - lengthUnEscaped;
         }
 
-        public override int SolvePuzzleB()
+        public override object SolvePuzzleB(string input)
         {
-            string[] newInput = new string[Input.Length];
-            for (int i = 0; i < Input.Length; i++)
+            string[] split = input.Split('\n');
+
+            string[] newInput = new string[split.Length];
+            for (int i = 0; i < split.Length; i++)
             {
                 newInput[i] += '"';
-                for (int j = 0; j < Input[i].Length; j++)
+                for (int j = 0; j < split[i].Length; j++)
                 {
-                    if (Input[i][j] == '"') newInput[i] += "\\\"";
-                    else if (Input[i][j] == '\\') newInput[i] += "\\\\";
-                    else newInput[i] += Input[i][j];
+                    if (split[i][j] == '"') newInput[i] += "\\\"";
+                    else if (split[i][j] == '\\') newInput[i] += "\\\\";
+                    else newInput[i] += split[i][j];
                 }
                 newInput[i] += '"';
             }
 
             int lengthNew = newInput.Aggregate(0, (total, value) => total + value.Length);
-            int lengthReal = Input.Aggregate(0, (total, value) => total + value.Length);
+            int lengthReal = split.Aggregate(0, (total, value) => total + value.Length);
 
             return lengthNew - lengthReal;
         }

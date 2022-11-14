@@ -1,56 +1,36 @@
 ﻿using System.Text;
+using SpaceStation.Utilities.Cryptography;
 
 namespace AoC.Solutions.Y2015
 {
-    public class D04 : AoCPuzzle<int>
+    public class D04 : AoCPuzzle
     {
-        public D04(string[] input) : base(input,2015,4)
+        public D04() : base(2015, 4) { }
+
+        public override object SolvePuzzleA(string input)
         {
+            return FindHashStartingWith("00000", input);
+
         }
 
-        public override int SolvePuzzleA()
+        public override object SolvePuzzleB(string input)
+        {
+            return FindHashStartingWith("000000", input);
+        }
+
+
+        private static int FindHashStartingWith(string startWith, string input)
         {
             int index = 0;
             while (true)
             {
-                string result = Md5Hash(GetInputAsString + index);
+                string result = Hashing.CalculateHash(input + index, Hashing.HashAlgorithm.MD5);
 
-                if (result.StartsWith("00000"))
+                if (result.StartsWith(startWith))
                 {
                     return index;
                 }
                 else index++;
-            }
-        }
-
-        public override int SolvePuzzleB()
-        {
-            int index = 0;
-            while (true)
-            {
-                string result = Md5Hash(GetInputAsString + index);
-
-                if (result.StartsWith("000000"))
-                {
-                    return index;
-                }
-                else index++;
-            }
-        }
-
-        private string Md5Hash(string input)
-        {
-            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
-            {
-                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-
-                StringBuilder sb = new System.Text.StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
-                {
-                    sb.Append(hashBytes[i].ToString("X2"));
-                }
-                return sb.ToString();
             }
         }
     }
