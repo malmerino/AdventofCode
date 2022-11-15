@@ -17,7 +17,7 @@
 
         public override object SolvePuzzleA(string input)
         {
-            return input.Aggregate(0, (sum, add) => sum + TranslateCharToFloor(add));
+            return input.Sum(TranslateCharToFloor);
         }
 
         public override object SolvePuzzleB(string input)

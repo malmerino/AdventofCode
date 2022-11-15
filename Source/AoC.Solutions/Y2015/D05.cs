@@ -17,15 +17,15 @@ namespace AoC.Solutions.Y2015
         }
 
 
-        private bool IsNiceStringB(string input)
+        private static bool IsNiceStringB(string input)
         {
-            string regex1 = @"(..).*\1";
-            string regex2 = @"(.).\1";
+            const string regex1 = @"(..).*\1";
+            const string regex2 = @"(.).\1";
             return Regex.IsMatch(input, regex1) && Regex.IsMatch(input, regex2);
         }
 
 
-        private bool IsNiceStringA(string input)
+        private static bool IsNiceStringA(string input)
         {
             char[] vowels = { 'a', 'e', 'i', 'o', 'u' };
             if (input.Count(x => vowels.Contains(x)) < 3) return false;

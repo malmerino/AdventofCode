@@ -5,13 +5,13 @@ namespace AoC.Solutions.Y2015
 {
     public class D09 : AoCPuzzle
     {
-        public D09() : base( 2015, 9)
+        public D09() : base(2015, 9)
         { }
 
         public override object SolvePuzzleA(string input)
         {
             List<Path> paths = PermutationAndTransformRoutes(input.Split('\n'));
-            return paths.Min(x=> x.Distance);
+            return paths.Min(x => x.Distance);
         }
 
         public override object SolvePuzzleB(string input)
@@ -21,7 +21,7 @@ namespace AoC.Solutions.Y2015
         }
 
 
-        private List<Path> PermutationAndTransformRoutes(string[] input)
+        private static List<Path> PermutationAndTransformRoutes(IEnumerable<string> input)
         {
             List<Route> routeList = input.Select(RouteFromString).ToList();
 
@@ -38,7 +38,7 @@ namespace AoC.Solutions.Y2015
             {
                 List<string> destinations = route.ToList();
 
-                bool errorRoute = true;
+                bool okRoute = true;
                 int length = 0;
 
                 for (int i = 0; i < destinations.Count - 1; i++)
@@ -53,12 +53,12 @@ namespace AoC.Solutions.Y2015
                     }
                     else
                     {
-                        errorRoute = false;
+                        okRoute = false;
                         break;
                     }
                 }
 
-                if (errorRoute)
+                if (okRoute)
                 {
                     paths.Add(new Path(destinations.ToArray(), length));
                 }
@@ -67,7 +67,7 @@ namespace AoC.Solutions.Y2015
             return paths;
         }
 
-        
+
         private static Route RouteFromString(string row)
         {
             string pattern = @"([A-Za-z]*) to ([A-Za-z]*) = (\d{1,4})";
@@ -77,10 +77,11 @@ namespace AoC.Solutions.Y2015
 
 
 
-        private struct Path
+        private class Path
         {
+            // ReSharper disable once MemberCanBePrivate.Local
             public string[] Routes { get; }
-            public int Distance { get;}
+            public int Distance { get; }
 
             public Path(string[] routes, int dist)
             {

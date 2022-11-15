@@ -12,8 +12,8 @@ namespace AoC.Solutions.Y2015
         {
             string[] split = input.Split('\n');
 
-            int lengthReal = split.Aggregate(0, (total, value) => total + value.Length);
-            int lengthUnEscaped = split.Aggregate(0, (total, value) => total + Regex.Unescape(value).Length - 2);
+            int lengthReal = split.Sum(x => x.Length);
+            int lengthUnEscaped = split.Sum(value => Regex.Unescape(value).Length - 2);
             return lengthReal - lengthUnEscaped;
         }
 

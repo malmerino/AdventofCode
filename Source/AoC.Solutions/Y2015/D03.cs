@@ -23,7 +23,7 @@
 
         public override object SolvePuzzleB(string input)
         {
-            List<House> houses = new List<House>();
+            List<House> houses = new();
 
             int sdPosX = 0, sdPosY = 0;
             int rdPosX = 0, rdPosY = 0;
@@ -51,10 +51,21 @@
 
         private static void Move(ref int xPos, ref int yPos, char operation)
         {
-            if (operation == '^') yPos++;
-            else if (operation == 'v') yPos--;
-            else if (operation == '>') xPos++;
-            else if (operation == '<') xPos--;
+            switch (operation)
+            {
+                case '^':
+                    yPos++;
+                    break;
+                case 'v':
+                    yPos--;
+                    break;
+                case '>':
+                    xPos++;
+                    break;
+                case '<':
+                    xPos--;
+                    break;
+            }
         }
 
         private static void HouseTracker(ICollection<House> visitedLocations, int dPositionX, int dPositionY)

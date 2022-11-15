@@ -9,15 +9,15 @@
         public override object SolvePuzzleA(string input)
         {
             IEnumerable<Box> boxes = InterpretInput(input);
-            return boxes.Aggregate(0, (total, box) => total + (CalculateSurfaceArea(box) + CalculateExtraPaperForElves(box)));
+            return boxes.Sum(box => CalculateSurfaceArea(box) + CalculateExtraPaperForElves(box));
         }
 
         public override object SolvePuzzleB(string input)
         {
             IEnumerable<Box> boxes = InterpretInput(input);
-            return boxes.Aggregate(0, (total, box) => total + (CalculateBoxVolume(box) + CalculateRibbonLength(box)));
+            return boxes.Sum(box => (CalculateBoxVolume(box) + CalculateRibbonLength(box)));
         }
-        
+
         private static IEnumerable<Box> InterpretInput(string input)
         {
             return input.Split('\n').Select(InterpretInputRow).ToList();
@@ -27,7 +27,7 @@
         private static Box InterpretInputRow(string row)
         {
             string[] rowContents = row.Split('x');
-            int[] rowParsedContents = rowContents.Select(x => int.Parse(x)).ToArray();
+            int[] rowParsedContents = rowContents.Select(int.Parse).ToArray();
             return new Box(rowParsedContents[0], rowParsedContents[1], rowParsedContents[2]);
         }
 

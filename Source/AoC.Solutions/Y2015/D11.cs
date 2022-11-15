@@ -35,11 +35,9 @@ namespace AoC.Solutions.Y2015
 
                 for (int i = 7; i >= 0; i--)
                 {
-                    if (password[i] == 'z' + 1)
-                    {
-                        password[i - 1]++;
-                        password[i] = 'a';
-                    }
+                    if (password[i] != 'z' + 1) continue;
+                    password[i - 1]++;
+                    password[i] = 'a';
                 }
 
                 bool repeatPass = false;

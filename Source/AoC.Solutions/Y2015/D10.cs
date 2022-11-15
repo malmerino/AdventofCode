@@ -34,7 +34,7 @@ namespace AoC.Solutions.Y2015
         }
 
 
-        private List<char> LookAndSaySequence(IReadOnlyList<char> input)
+        private static List<char> LookAndSaySequence(IReadOnlyList<char> input)
         {
 
             List<char> result = new();

@@ -11,9 +11,6 @@ namespace AoC.Solutions.Y2015
         public D13() : base(2015, 13)
         { }
 
-
-        // 537 is too low
-
         public override object SolvePuzzleA(string input)
         {
             List<PersonHappiness> persons = GeneratePersonList(input).ToList();
@@ -28,19 +25,8 @@ namespace AoC.Solutions.Y2015
             List<PersonHappiness> addMyself = new();
             foreach (PersonHappiness uniquePerson in persons.Where(uniquePerson => addMyself.All(x => x.Name != uniquePerson.Name)))
             {
-                addMyself.Add(new PersonHappiness()
-                {
-                    Name = uniquePerson.Name,
-                    WhenNextTo = "Me",
-                    Happiness = 0
-                });
-
-                addMyself.Add(new PersonHappiness()
-                {
-                    Name = "Me",
-                    WhenNextTo = uniquePerson.Name,
-                    Happiness = 0
-                });
+                addMyself.Add(new PersonHappiness(uniquePerson.Name, 0, "Me"));
+                addMyself.Add(new PersonHappiness("Me", 0, uniquePerson.Name));
             }
 
             persons = persons.Concat(addMyself).ToList();
@@ -49,7 +35,7 @@ namespace AoC.Solutions.Y2015
             return GenerateSeatMap(permutations, persons).Max(x => x.Happiness);
         }
 
-        private static List<IEnumerable<string>> GetPermutations(List<PersonHappiness> persons)
+        private static List<IEnumerable<string>> GetPermutations(IEnumerable<PersonHappiness> persons)
         {
             List<string> uniquePersons = persons
                 .Select(x => x.Name)
@@ -64,32 +50,31 @@ namespace AoC.Solutions.Y2015
 
         public IEnumerable<PersonHappiness> GeneratePersonList(string input)
         {
+            string pattern = @"([a-zA-Z]*) would ([a-z]{4}) (\d*) .*to ([a-zA-Z]*)";
             /*  Group 1 => Name1
              *  Group 2 => Operation (lose/gain)
              *  Group 3 => Numeric Value
              *  Group 4 => Name2
              */
-            string pattern = @"([a-zA-Z]*) would ([a-z]{4}) (\d*) .*to ([a-zA-Z]*)";
             foreach (string row in input.Split("\r\n"))
             {
+                
                 Match match = Regex.Match(row, pattern);
-
-
+                
 
                 int val = int.Parse(match.Groups[3].Value);
-                yield return new PersonHappiness()
-                {
-                    Happiness = match.Groups[2].Value == "gain" ? val : -val,
-                    Name = match.Groups[1].Value,
-                    WhenNextTo = match.Groups[4].Value
-                };
+                val = match.Groups[2].Value == "gain" ? val : -val;
+                yield return new PersonHappiness(
+                    name: match.Groups[1].Value,
+                    happiness: val,
+                    whenNextTo: match.Groups[4].Value);
             }
         }
 
 
-        List<TableSeating> GenerateSeatMap(List<IEnumerable<string>> permutations, List<PersonHappiness> persons)
+        private static IEnumerable<TableSeating> GenerateSeatMap(List<IEnumerable<string>> permutations, List<PersonHappiness> persons)
         {
-            List<TableSeating> temp = new List<TableSeating>();
+            List<TableSeating> temp = new();
             foreach (IEnumerable<string> orientation in permutations)
             {
                 int happiness = 0;
@@ -117,6 +102,14 @@ namespace AoC.Solutions.Y2015
 
         public class PersonHappiness
         {
+            public PersonHappiness(string name, int happiness, string whenNextTo)
+            {
+                Name = name;
+                Happiness = happiness;
+                WhenNextTo = whenNextTo;
+            }
+
+
             public string Name { get; set; }
             public int Happiness { get; set; }
             public string WhenNextTo { get; set; }
@@ -124,6 +117,7 @@ namespace AoC.Solutions.Y2015
 
         private struct TableSeating
         {
+            // ReSharper disable once MemberCanBePrivate.Local
             public string[] Persons { get; }
             public int Happiness { get; }
 
