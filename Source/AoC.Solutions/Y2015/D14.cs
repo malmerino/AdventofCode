@@ -11,8 +11,6 @@ namespace AoC.Solutions.Y2015
     {
         public D14() : base(2015, 14)
         { }
-        
-
 
         public override object SolvePuzzleA(string input)
         {
@@ -51,7 +49,6 @@ namespace AoC.Solutions.Y2015
             {
                 reindeerSimulation.ForEach(UpdateReindeer);
                 reindeerSimulation.OrderByDescending(x => x.DistanceFromStart).First().Score++;
-
             }
             
             return reindeerSimulation.Max(x => x.Score);
