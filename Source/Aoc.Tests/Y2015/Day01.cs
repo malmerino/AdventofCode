@@ -8,7 +8,7 @@ using AoC.Solutions;
 
 namespace Aoc.Tests.Y2015
 {
-    public class Day01 : DefaultAoCDay
+    public class Day01 : DefaultTestAoCDay
     {
         public Day01() : base(File.ReadAllText("Inputs\\Y2015D01.txt")) { }
 

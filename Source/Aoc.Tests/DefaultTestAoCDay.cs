@@ -7,9 +7,9 @@ using AoC.Solutions;
 
 namespace Aoc.Tests
 {
-    public abstract class DefaultAoCDay
+    public abstract class DefaultTestAoCDay
     {
-        protected DefaultAoCDay(string content)
+        protected DefaultTestAoCDay(string content)
         {
             FileContent = content;
         }

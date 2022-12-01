@@ -10,7 +10,7 @@ using static AoC.Solutions.Y2015.D14;
 
 namespace Aoc.Tests.Y2015
 {
-    public class Day14 : DefaultAoCDay
+    public class Day14 : DefaultTestAoCDay
     {
 
         public Day14() : base(File.ReadAllText("Inputs\\Y2015D14.txt")) { }
