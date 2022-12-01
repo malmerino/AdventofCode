@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aoc.Tests", "Aoc.Tests\Aoc.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Externals", "Externals", "{08DF742D-245E-44B0-8F2E-E0B64756810A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpaceStation.Utilities", "..\Externals\SpaceStation\SpaceStation.Utilities\SpaceStation.Utilities.csproj", "{01FB9699-6A78-44DA-8D2E-F4CF5B5C9C59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpaceStation.Utilities", "..\Externals\SpaceStation\SpaceStation.Utilities\SpaceStation.Utilities.csproj", "{01FB9699-6A78-44DA-8D2E-F4CF5B5C9C59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
