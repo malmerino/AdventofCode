@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Aoc.Tests.Y2022
 {
-    public class Day01 : DefaultAoCDay
+    public class Day01 : DefaultTestAoCDay
     {
         private string sampleInput;
         public Day01() : base(File.ReadAllText("Inputs\\Y2022D01.txt")) { }

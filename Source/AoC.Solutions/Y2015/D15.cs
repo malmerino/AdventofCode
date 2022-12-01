@@ -21,11 +21,11 @@ namespace AoC.Solutions.Y2015
             List<Recipe> recipes = new List<Recipe>();
 
 
-       
 
 
 
-            return CalculateTotal(recipes);
+
+            return 0;
 
         }
         public override object SolvePuzzleB(string input)
