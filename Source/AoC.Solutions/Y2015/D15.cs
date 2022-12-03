@@ -1,4 +1,5 @@
 ﻿using System.Reflection.PortableExecutable;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text.Json.Nodes;
@@ -12,45 +13,31 @@ namespace AoC.Solutions.Y2015
         public D15() : base(2015, 15)
         { }
 
+        private record Ingredient(string Name, int Capacity, int Durability, int Flavor, int Texture, int Calories);
+        private record IngredientRow(Ingredient Ingredient, int Teaspoons);
+        private record Recipe(IEnumerable<IngredientRow> Rows);
 
 
         public override object SolvePuzzleA(string input)
         {
-            List<Ingredient> ingredients = ParseInput(input).ToList();
-            List<RecipeRow> recipeRows = ingredients.Select(ingredient => new RecipeRow() { Amount = 25, Ingredient = ingredient }).ToList();
-            List<Recipe> recipes = new List<Recipe>();
+            IEnumerable<Ingredient> ingredients = ParseInput(input);
+            IEnumerable<Recipe> recipes = CreateRecipes(ingredients);
 
-
-
-
-
-
-            return 0;
+            return recipes.Max(x => CalculateTotalNoCalories(x.Rows.ToList()));
 
         }
         public override object SolvePuzzleB(string input)
         {
-            return "";
+            IEnumerable<Ingredient> ingredients = ParseInput(input);
+            IEnumerable<Recipe> recipes = CreateRecipes(ingredients);
+            IEnumerable<Recipe> recipeWith500Calories = recipes.Where(x => CalculateCalories(x.Rows) == 500);
+            
+            return recipeWith500Calories.Max(x => CalculateTotalNoCalories(x.Rows));
 
         }
-
-        private int CalculateCapacity(List<RecipeRow> input) => input.Sum(x => x.Amount * x.Ingredient.Capacity);
-        private int CalculateDurability(List<RecipeRow> input) => input.Sum(x => x.Amount * x.Ingredient.Durability);
-        private int CalculateFlavor(List<RecipeRow> input) => input.Sum(x => x.Amount * x.Ingredient.Flavor);
-        private int CalculateTexture(List<RecipeRow> input) => input.Sum(x => x.Amount * x.Ingredient.Texture);
-
-        private int CalculateTotal(List<RecipeRow> input)
-        {
-            return Math.Max(CalculateCapacity(input), 0) *
-                Math.Max(CalculateDurability(input), 0) *
-                Math.Max(CalculateFlavor(input), 0) *
-                Math.Max(CalculateTexture(input), 0);
-        }
-
         
 
-
-        private IEnumerable<Ingredient> ParseInput(string input)
+        private static IEnumerable<Ingredient> ParseInput(string input)
         {
             return from row in input.Split("\r\n")
                    let pattern = @"([A-Z]{1}[a-z]*): capacity (-\d{1}|\d{1}), durability (-\d{1}|\d{1}), flavor (-\d{1}|\d{1}), texture (-\d{1}|\d{1}), calories (-\d{1}|\d{1})"
@@ -61,38 +48,87 @@ namespace AoC.Solutions.Y2015
                    let flavor = int.Parse(match.Groups[4].Value)
                    let texture = int.Parse(match.Groups[5].Value)
                    let calories = int.Parse(match.Groups[6].Value)
-                   select new Ingredient()
-                   {
-                       Calories = calories,
-                       Texture = texture,
-                       Flavor = flavor,
-                       Durability = durability,
-                       Capacity = capacity,
-                       Name = match.Groups[1].Value,
-                   };
+                   select new Ingredient(match.Groups[1].Value, capacity, durability, flavor, texture, calories);
         }
 
-
-        private class Ingredient
+        
+        private static IEnumerable<Recipe> CreateRecipes(IEnumerable<Ingredient> inputIngredients)
         {
-            public string Name { get; set; }
-            public int Capacity { get; set; }
-            public int Durability { get; set; }
-            public int Flavor { get; set; }
-            public int Texture { get; set; }
-            public int Calories { get; set; }
+            Ingredient[] ingredients = inputIngredients as Ingredient[] ?? inputIngredients.ToArray();
+            int[] iteratedArray = new int[ingredients.Length];
+            iteratedArray[^1] = 100;
+            
+            while (true)
+            {
+                List<IngredientRow> rows = iteratedArray.Select((t, i) => new IngredientRow(ingredients[i], t)).ToList();
+                Recipe recipe = new(rows);
+                yield return recipe;
+
+                IterateArray(ref iteratedArray);
+                if (rows[0].Teaspoons == 100) break;
+            }
+
         }
 
-        private class RecipeRow
+        private static void IterateArray(ref int[] iteratedArray)
         {
-            public Ingredient Ingredient { get; set; }
-            public int Amount { get; set; }
+
+            if (iteratedArray[^1] > 0)
+            {
+                iteratedArray[^1]--;
+                iteratedArray[^2]++;
+            }
+            else
+            {
+                for (int i = 1; i < iteratedArray.Length; i++)
+                {
+                    if (iteratedArray[i] != 100 - iteratedArray[..i].Sum()) continue;
+                    iteratedArray[i - 1]++;
+                    iteratedArray[i] = 0;
+                    break;
+                }
+            }
+
+            if (iteratedArray[^1] == 0)
+            {
+                iteratedArray[^1] = 100 - iteratedArray[..^1].Sum();
+            }
         }
 
-        private class Recipe
+
+
+        private static int CalculateCapacity(IEnumerable<IngredientRow> input)
         {
-            public List<RecipeRow> RecipeRows { get; set; }
+            return input.Sum(x => x.Teaspoons * x.Ingredient.Capacity);
         }
 
+        private static int CalculateDurability(IEnumerable<IngredientRow> input)
+        {
+            return input.Sum(x => x.Teaspoons * x.Ingredient.Durability);
+        }
+
+        private static int CalculateFlavor(IEnumerable<IngredientRow> input)
+        {
+            return input.Sum(x => x.Teaspoons * x.Ingredient.Flavor);
+        }
+
+        private static int CalculateTexture(IEnumerable<IngredientRow> input)
+        {
+            return input.Sum(x => x.Teaspoons * x.Ingredient.Texture);
+        }
+        private static int CalculateCalories(IEnumerable<IngredientRow> input)
+        {
+            return input.Sum(x => x.Teaspoons * x.Ingredient.Calories);
+        }
+
+        private static int CalculateTotalNoCalories(IEnumerable<IngredientRow> input)
+        {
+            IEnumerable<IngredientRow> ingredientRows = input as IngredientRow[] ?? input.ToArray();
+
+            return Math.Max(CalculateCapacity(ingredientRows), 0) *
+                   Math.Max(CalculateDurability(ingredientRows), 0) *
+                   Math.Max(CalculateFlavor(ingredientRows), 0) *
+                   Math.Max(CalculateTexture(ingredientRows), 0);
+        }
     }
 }
