@@ -12,6 +12,7 @@ namespace Aoc.Tests.Y2016
 
         public override void Setup()
         {
+            Puzzle = new AoC.Solutions.Y2016.D01();
 
         }
 
