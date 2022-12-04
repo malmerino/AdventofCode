@@ -15,15 +15,21 @@ namespace AoC.Solutions.Y2015
             IEnumerable<int> containers = GetContainers(input);
             IEnumerable<int[]> combinations = containers.GetCombinations();
 
-            return combinations.Count(x=> x.Sum() == Target);
+            return combinations.Count(x => x.Sum() == Target);
         }
 
         public override object SolvePuzzleB(string input)
         {
             IEnumerable<int> containers = GetContainers(input);
             IEnumerable<int[]> combinations = containers.GetCombinations();
+            IOrderedEnumerable<int[]> validContainers = combinations.Where(x => x.Sum() == Target).OrderBy(x => x.Length);
 
-            return combinations.Where(x => x.Sum() == Target).OrderBy(x=> x.Length).First().Length;
+            if (validContainers.Any())
+            {
+                int low = validContainers.First().Length;
+                return validContainers.Count(x => x.Length == low);
+            }
+            else throw new Exception("No valid containers found");
         }
 
         private IEnumerable<int> GetContainers(string input)
