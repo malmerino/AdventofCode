@@ -11,7 +11,7 @@ namespace Aoc.Tests.Y2015
 {
     public class Day17 : DefaultTestAoCDay
     {
-        private readonly string sampleInput = "";
+        private readonly string sampleInput = "20\r\n15\r\n10\r\n5\r\n5";
 
         public Day17() : base(File.ReadAllText("Inputs\\Y2015D17.txt")) { }
 
@@ -23,7 +23,16 @@ namespace Aoc.Tests.Y2015
         [Test]
         public override void SampleTestA()
         {
-           // No samples available to create a test
+            if (Puzzle is D17 puzzle)
+            {
+                int t = puzzle.Target;
+                puzzle.Target = 25;
+                int ans = (int)Puzzle.SolvePuzzleA(sampleInput);
+
+                puzzle.Target = t;
+                Assert.IsTrue(ans == 4, $"Expected 4 and got {ans}");
+            }
+            else Assert.Fail();
         }
 
         [Test]
