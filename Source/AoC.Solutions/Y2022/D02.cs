@@ -1,11 +1,4 @@
-﻿using System;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace AoC.Solutions.Y2022
+﻿namespace AoC.Solutions.Y2022
 {
     public class D02 : AoCPuzzle
     {
