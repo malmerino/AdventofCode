@@ -23,7 +23,7 @@ namespace AoC.Solutions.Y2022
             IEnumerable<char> badges = GetBadges(rucksacks.ToArray());
             return badges.Sum(x => Alphabet.IndexOf(x) + 1);
         }
-        
+
         private static IEnumerable<Rucksack> GenerateRucksacks(string input)
         {
             string[] rows = input.Split("\r\n");
@@ -32,11 +32,6 @@ namespace AoC.Solutions.Y2022
             {
                 string compartment1 = rucksack[..(rucksack.Length / 2)];
                 string compartment2 = rucksack[(rucksack.Length / 2)..];
-
-                if (compartment1.Length != compartment2.Length)
-                {
-                    throw new Exception("Input is not dividable by 2 without reminder");
-                }
 
                 yield return new Rucksack(rucksack, compartment1, compartment2);
             }
@@ -51,28 +46,16 @@ namespace AoC.Solutions.Y2022
 
         private static IEnumerable<char> GetBadges(Rucksack[] rucksacks)
         {
-            for (int i = 0; i < rucksacks.Count(); i += 3)
+            for (int i = 0; i < rucksacks.Length; i += 3)
             {
                 Rucksack[] group = rucksacks[i..(i + 3)];
-                foreach (char t1 in Alphabet)
+                foreach (char t1 in Alphabet.Where(t1 => group.All(x => x.Combined.Contains(t1))))
                 {
-                    bool success = false;
-                    foreach (Rucksack t in group)
-                    {
-                        if (!t.Combined.Contains(t1))
-                        {
-                            success = false;
-                            break;
-                        }
-                        success = true;
-                    }
-
-                    if(!success) continue;
                     yield return t1;
                 }
             }
         }
-        
+
         private record Rucksack(string Combined, string Compartment1, string Compartment2);
 
 
