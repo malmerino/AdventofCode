@@ -1,7 +1,4 @@
-﻿
-// ReSharper disable StringLiteralTypo
-
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace AoC.Solutions.Y2022
 {
@@ -11,54 +8,55 @@ namespace AoC.Solutions.Y2022
 
         public override object SolvePuzzleA(string input)
         {
-            InterpretInstructions(input, out IEnumerable<MoveInstruction> moveInstructions, out IEnumerable<Stack> stackInstructions);
-            Dictionary<int, string> stacks = RunCraneInstructions(moveInstructions, stackInstructions, false);
+            InterpretInstructions(input, out IEnumerable<MoveInstruction> moveInstructions, out Dictionary<int, string> stackInstructions);
+            Dictionary<int, string> stacks = RunCraneInstructions9000(moveInstructions, stackInstructions);
 
             return stacks.Aggregate("", (sum, add) => sum + add.Value.Last());
         }
 
         public override object SolvePuzzleB(string input)
         {
-            InterpretInstructions(input, out IEnumerable<MoveInstruction> moveInstructions, out IEnumerable<Stack> stackInstructions);
-            Dictionary<int, string> stacks = RunCraneInstructions(moveInstructions, stackInstructions, true);
+            InterpretInstructions(input, out IEnumerable<MoveInstruction> moveInstructions, out Dictionary<int, string> stackInstructions);
+            Dictionary<int, string> stacks = RunCraneInstructions9001(moveInstructions, stackInstructions);
 
             return stacks.Aggregate("", (sum, add) => sum + add.Value.Last());
         }
 
 
-        private static Dictionary<int, string> RunCraneInstructions(IEnumerable<MoveInstruction> moveInstructions, IEnumerable<Stack> stackInstructions, bool crateMover9001)
+        private static Dictionary<int, string> RunCraneInstructions9000(IEnumerable<MoveInstruction> moveInstructions, Dictionary<int, string> stacks)
         {
-            Dictionary<int, string> stacks = stackInstructions.ToDictionary(s => s.Key, s => s.Values);
-
             foreach (MoveInstruction instruction in moveInstructions)
             {
-                if (crateMover9001)
+                for (int i = 0; i < instruction.Amount; i++)
                 {
-                    stacks[instruction.Destination] += stacks[instruction.Source][^instruction.Amount..];
-                    stacks[instruction.Source] = stacks[instruction.Source][..^instruction.Amount];
-                }
-                else
-                {
-                    for (int i = 0; i < instruction.Amount; i++)
-                    {
-                        stacks[instruction.Destination] += stacks[instruction.Source][^1..];
-                        stacks[instruction.Source] = stacks[instruction.Source][..^1];
-                    }
+                    stacks[instruction.Destination] += stacks[instruction.Source][^1..];
+                    stacks[instruction.Source] = stacks[instruction.Source][..^1];
                 }
             }
-
             return stacks;
         }
 
+        private static Dictionary<int, string> RunCraneInstructions9001(IEnumerable<MoveInstruction> moveInstructions, Dictionary<int, string> stacks)
+        {
+            foreach (MoveInstruction instruction in moveInstructions)
+            {
 
+                stacks[instruction.Destination] += stacks[instruction.Source][^instruction.Amount..];
+                stacks[instruction.Source] = stacks[instruction.Source][..^instruction.Amount];
 
+            }
+            return stacks;
+        }
+        
 
-        private static void InterpretInstructions(string input, out IEnumerable<MoveInstruction> moveInstructions, out IEnumerable<Stack> stackInstructions)
+        private static void InterpretInstructions(string input, out IEnumerable<MoveInstruction> moveInstructions, out Dictionary<int, string> stackInstructions)
         {
             string[] part = input.Split("\r\n\r\n");
 
-            stackInstructions = LoadInitialStack(part[0]);
             moveInstructions = LoadMoveInstructions(part[1]);
+
+            IEnumerable<StackInstruction> stack = LoadInitialStack(part[0]);
+            stackInstructions = stack.ToDictionary(s => s.Key, s => s.Values);
         }
 
 
@@ -76,7 +74,7 @@ namespace AoC.Solutions.Y2022
             }
         }
 
-        private static IEnumerable<Stack> LoadInitialStack(string input)
+        private static IEnumerable<StackInstruction> LoadInitialStack(string input)
         {
             string[] rows = input.Split("\r\n");
             char[,] grid = new char[rows[0].Length, rows.Length];
@@ -95,36 +93,22 @@ namespace AoC.Solutions.Y2022
             {
                 if (grid[x, maxY] == ' ') continue;
 
-                Stack stack = new(int.Parse($"{grid[x, maxY]}"));
+                string values = string.Empty;
 
                 for (int y = maxY - 1; y >= 0; y--)
                 {
                     if (grid[x, y] == ' ') break;
-
-                    stack.Values += grid[x, y];
+                    values += grid[x, y];
                 }
 
-                yield return stack;
+                int key = int.Parse($"{grid[x, maxY]}");
+
+                yield return new StackInstruction(key, values);
             }
         }
-
-
-
+        
         private record MoveInstruction(int Amount, int Source, int Destination);
-
-        private class Stack
-        {
-            public int Key { get; }
-
-            public Stack(int key)
-            {
-                Key = key;
-                Values = string.Empty;
-            }
-
-            public string Values { get; set; }
-        }
-
-
+        private record StackInstruction(int Key, string Values);
     }
 }
+
