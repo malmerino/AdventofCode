@@ -18,7 +18,7 @@ namespace AoC.Solutions.Y2022
             IEnumerable<CleanupJob> cleanupJobs = GetCleanupJobs(input);
             return FindOverlaps(cleanupJobs);
         }
-        
+
         private static IEnumerable<CleanupJob> GetCleanupJobs(string input)
         {
             string[] rows = input.Split("\r\n");
@@ -32,8 +32,9 @@ namespace AoC.Solutions.Y2022
 
                 for (int i = values[0]; i <= values[1]; i++) elf1.Add(i);
                 for (int i = values[2]; i <= values[3]; i++) elf2.Add(i);
-                
+
                 yield return new CleanupJob(elf1.ToArray(), elf2.ToArray());
+
             }
         }
 
@@ -41,7 +42,7 @@ namespace AoC.Solutions.Y2022
         {
             return input.Count(x => x.Elf1.Intersect(x.Elf2).Count() == x.Elf1.Length || x.Elf2.Intersect(x.Elf1).Count() == x.Elf2.Length);
         }
-        
+
 
         private static int FindOverlaps(IEnumerable<CleanupJob> input)
         {
