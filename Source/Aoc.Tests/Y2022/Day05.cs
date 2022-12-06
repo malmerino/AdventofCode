@@ -14,21 +14,28 @@ namespace Aoc.Tests.Y2022
         public override void Setup()
         {
             Puzzle = new AoC.Solutions.Y2022.D05();
-            sampleInput = "    [D]    \r\n[N] [C]    \r\n[Z] [M] [P]\r\n 1   2   3 \r\n\r\nmove 1 from 2 to 1\r\nmove 3 from 1 to 3\r\nmove 2 from 2 to 1\r\nmove 1 from 1 to 2";
+
+            sampleInput = "    [D]    \r\n" +
+                          "[N] [C]    \r\n" +
+                          "[Z] [M] [P]\r\n" +
+                          " 1   2   3 " +
+                          "\r\n\r\n" +
+                          "move 1 from 2 to 1\r\n" +
+                          "move 3 from 1 to 3\r\n" +
+                          "move 2 from 2 to 1\r\n" +
+                          "move 1 from 1 to 2";
         }
 
         [Test]
         public override void SampleTestA()
         {
-            string ans = (string)Puzzle.SolvePuzzleA(sampleInput);
-            Assert.IsTrue(ans == "CMZ", $"Expected CMZ and got {ans}");
+            RunSampleTestA(Puzzle, sampleInput, "CMZ");
         }
 
         [Test]
         public override void SampleTestB()
         {
-            string ans = (string)Puzzle.SolvePuzzleB(sampleInput);
-            Assert.IsTrue(ans == "MCD", $"Expected MCD and got {ans}");
+            RunSampleTestB(Puzzle, sampleInput, "MCD");
         }
     }
 }

@@ -21,19 +21,13 @@ namespace Aoc.Tests.Y2022
         [Test]
         public override void SampleTestA()
         {
-            int ans = (int)Puzzle.SolvePuzzleA(sampleInput);
-            Assert.IsTrue(ans == 24000, $"Expected 24000 and got {ans}");
+            RunSampleTestA(Puzzle, sampleInput, 24000);
         }
 
         [Test]
         public override void SampleTestB()
         {
-            //Somehow this test does not work
-            Assert.True(true);
-
-            return;
-            int ans = (int)Puzzle.SolvePuzzleB(sampleInput);
-            Assert.IsTrue(ans == 45000, $"Expected 45000 and got {ans}");
+            RunSampleTestB(Puzzle, sampleInput, 45000); 
         }
     }
 }

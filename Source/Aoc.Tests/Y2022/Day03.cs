@@ -14,21 +14,25 @@ namespace Aoc.Tests.Y2022
         public override void Setup()
         {
             Puzzle = new AoC.Solutions.Y2022.D03();
-            sampleInput = "vJrwpWtwJgWrhcsFMMfFFhFp\r\njqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\r\nPmmdzqPrVvPwwTWBwg\r\nwMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\r\nttgJtRGJQctTZtZT\r\nCrZsJsPPZsGzwwsLwLmpwMDw";
+
+            sampleInput = "vJrwpWtwJgWrhcsFMMfFFhFp\r\n" +
+                          "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL\r\n" +
+                          "PmmdzqPrVvPwwTWBwg\r\n" +
+                          "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn\r\n" +
+                          "ttgJtRGJQctTZtZT\r\n" +
+                          "CrZsJsPPZsGzwwsLwLmpwMDw";
         }
 
         [Test]
         public override void SampleTestA()
         {
-            int ans = (int)Puzzle.SolvePuzzleA(sampleInput);
-            Assert.IsTrue(ans == 157, $"Expected 157 and got {ans}");
+            RunSampleTestA(Puzzle, sampleInput, 157);
         }
 
         [Test]
         public override void SampleTestB()
         {
-            int ans = (int)Puzzle.SolvePuzzleB(sampleInput);
-            Assert.IsTrue(ans == 70, $"Expected 70 and got {ans}");
+            RunSampleTestB(Puzzle, sampleInput, 70);
         }
     }
 }

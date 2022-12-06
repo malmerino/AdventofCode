@@ -28,7 +28,7 @@ namespace AoC.Solutions.Y2022
                     return i + distinct;
                 }
             }
-            throw new Exception("Four distinct characters could not be found");
+            throw new Exception($"{distinct} distinct characters could not be found");
         }
     }
 }

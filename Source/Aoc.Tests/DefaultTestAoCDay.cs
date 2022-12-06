@@ -31,13 +31,13 @@ namespace Aoc.Tests
         public void RealTest() => AoCPuzzle.SolveVerbose(Puzzle, FileContent);
 
 
-        protected static void RunSampleTestA<T>(AoCPuzzle puzzle, string input, T answer) where T : struct
+        protected static void RunSampleTestA<T>(AoCPuzzle puzzle, string input, T answer)
         {
             T ans = (T)puzzle.SolvePuzzleA(input);
             Assert.That(ans, Is.EqualTo(answer));
         }
 
-        protected static void RunSampleTestB<T>(AoCPuzzle puzzle, string input, T answer) where T : struct
+        protected static void RunSampleTestB<T>(AoCPuzzle puzzle, string input, T answer) 
         {
             T ans = (T)puzzle.SolvePuzzleB(input);
             Assert.That(ans, Is.EqualTo(answer));
