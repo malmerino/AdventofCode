@@ -1,7 +1,4 @@
-﻿
-// ReSharper disable StringLiteralTypo
-
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace AoC.Solutions.Y2022
 {
