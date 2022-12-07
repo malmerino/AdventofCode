@@ -9,9 +9,10 @@ namespace Aoc.Tests
 {
     public abstract class DefaultTestAoCDay
     {
-        protected DefaultTestAoCDay(string content)
+        protected DefaultTestAoCDay(string content, string sampleInput = "")
         {
             FileContent = content;
+            SampleInput = sampleInput;
         }
 
         public string FileContent { get; protected set; }
@@ -30,16 +31,18 @@ namespace Aoc.Tests
         [Test]
         public void RealTest() => AoCPuzzle.SolveVerbose(Puzzle, FileContent);
 
+        protected string SampleInput { get; set; }
 
-        protected static void RunSampleTestA<T>(AoCPuzzle puzzle, string input, T answer)
+
+        protected void RunSampleTestA<T>(string input, T answer)
         {
-            T ans = (T)puzzle.SolvePuzzleA(input);
+            T ans = (T)Puzzle.SolvePuzzleA(input);
             Assert.That(ans, Is.EqualTo(answer));
         }
 
-        protected static void RunSampleTestB<T>(AoCPuzzle puzzle, string input, T answer) 
+        protected void RunSampleTestB<T>( string input, T answer) 
         {
-            T ans = (T)puzzle.SolvePuzzleB(input);
+            T ans = (T)Puzzle.SolvePuzzleB(input);
             Assert.That(ans, Is.EqualTo(answer));
         }
 
