@@ -15,15 +15,14 @@ namespace AoC.Solutions.Y2022
         {
             return FindDistinctCharacters(14, input);
         }
-
-
-        private int FindDistinctCharacters(int distinct, string input)
+        
+        private static int FindDistinctCharacters(int distinct, string input)
         {
             for (int i = 0; i < input.Length; i++)
             {
-                string msg = input[i..(i + distinct)];
+                string section = input[i..(i + distinct)];
 
-                if (msg.GroupBy(x => x).Count() == distinct)
+                if (section.GroupBy(x => x).Count() == distinct)
                 {
                     return i + distinct;
                 }
@@ -32,4 +31,3 @@ namespace AoC.Solutions.Y2022
         }
     }
 }
-
