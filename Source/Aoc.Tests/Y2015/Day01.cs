@@ -10,33 +10,20 @@ namespace Aoc.Tests.Y2015
 {
     public class Day01 : DefaultTestAoCDay
     {
-        public Day01() : base(File.ReadAllText("Inputs\\Y2015D01.txt")) { }
+        public Day01() : base(new AoC.Solutions.Y2015.D01()) { }
 
-        public override void Setup()
-        {
-            Puzzle = new AoC.Solutions.Y2015.D01();
-        }
+        public override void Setup() { }
 
         [Test]
         public override void SampleTestA()
         {
-            Assert.IsTrue(Puzzle.SolvePuzzleA("(())") is 0);
-            Assert.IsTrue(Puzzle.SolvePuzzleA("()()") is 0);
-            
-            Assert.IsTrue(Puzzle.SolvePuzzleA("(()(()(") is 3);
-            Assert.IsTrue(Puzzle.SolvePuzzleA("))(((((") is 3);
-
-            Assert.IsTrue(Puzzle.SolvePuzzleA("())") is -1);
-            Assert.IsTrue(Puzzle.SolvePuzzleA("))(") is -1);
-
-            Assert.IsTrue(Puzzle.SolvePuzzleA(")))") is -3);
-            Assert.IsTrue(Puzzle.SolvePuzzleA(")())())") is -3);
+            RunSampleTestA(SampleInput, -1);
         }
 
         [Test]
         public override void SampleTestB()
         {
-            Assert.True(true, "No Tests");
+            RunSampleTestB(SampleInput, 5);
         }
 
     }

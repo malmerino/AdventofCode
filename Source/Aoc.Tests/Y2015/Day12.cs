@@ -11,26 +11,20 @@ namespace Aoc.Tests.Y2015
     public class Day12 : DefaultTestAoCDay
     {
 
-        public Day12() : base(File.ReadAllText("Inputs\\Y2015D12.txt")) { }
+        public Day12() : base(new AoC.Solutions.Y2015.D12()) { }
 
-        public override void Setup()
-        {
-            Puzzle = new AoC.Solutions.Y2015.D12();
-        }
+        public override void Setup() { }
 
         [Test]
         public override void SampleTestA()
         {
-            Assert.IsTrue(Puzzle.SolvePuzzleA(@"{""a"":2,""b"":4}") is 6);
-            Assert.IsTrue(Puzzle.SolvePuzzleA(@"{""a"":{""b"":4},""c"":-1}") is 3);
-            Assert.IsTrue(Puzzle.SolvePuzzleA(@"{}") is 0);
+            RunSampleTestA(SampleInput, 6);
         }
 
         [Test]
         public override void SampleTestB()
         {
-            Assert.IsTrue(Puzzle.SolvePuzzleB(@"{""d"":""red"",""e"":[1,2,3,4],""f"":5}") is 0);
-            Assert.IsTrue(Puzzle.SolvePuzzleB(@"[1,""red"",5]") is 6);
+            RunSampleTestB(SampleInput, 4);
         }
 
     }

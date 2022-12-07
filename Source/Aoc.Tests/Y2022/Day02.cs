@@ -8,25 +8,20 @@ namespace Aoc.Tests.Y2022
 {
     public class Day02 : DefaultTestAoCDay
     {
-        private string sampleInput;
-        public Day02() : base(File.ReadAllText("Inputs\\Y2022D02.txt")) { }
+        public Day02() : base(new AoC.Solutions.Y2022.D02()) { }
 
-        public override void Setup()
-        {
-            Puzzle = new AoC.Solutions.Y2022.D02();
-            sampleInput = "A Y\r\nB X\r\nC Z";
-        }
+        public override void Setup() { }
 
         [Test]
         public override void SampleTestA()
         {
-            RunSampleTestA(Puzzle, sampleInput, 15);
+            RunSampleTestA(SampleInput, 15);
         }
 
         [Test]
         public override void SampleTestB()
         {
-            RunSampleTestB(Puzzle, sampleInput, 12);
+            RunSampleTestB(SampleInput, 12);
         }
     }
 }

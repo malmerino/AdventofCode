@@ -9,10 +9,28 @@ namespace Aoc.Tests
 {
     public abstract class DefaultTestAoCDay
     {
+        private const string DefaultFilePath = "Inputs\\Y{0}D{1}.txt";
+        private const string SampleFilePath = "SampleInputs\\Sample_Y{0}D{1}.txt";
+
+
         protected DefaultTestAoCDay(string content, string sampleInput = "")
         {
             FileContent = content;
             SampleInput = sampleInput;
+        }
+
+        protected DefaultTestAoCDay(AoCPuzzle puzzle)
+        {
+            Puzzle = puzzle;
+
+            string pathFileContent = string.Format(DefaultFilePath, puzzle.Year, $"{puzzle.Day}".PadLeft(2, '0'));
+            string sampleFileContent = string.Format(SampleFilePath, puzzle.Year, $"{puzzle.Day}".PadLeft(2, '0'));
+
+            FileContent = File.ReadAllText(pathFileContent);
+
+            if (File.Exists(sampleFileContent))
+                SampleInput = File.ReadAllText(sampleFileContent);
+
         }
 
         public string FileContent { get; protected set; }
@@ -40,11 +58,13 @@ namespace Aoc.Tests
             Assert.That(ans, Is.EqualTo(answer));
         }
 
-        protected void RunSampleTestB<T>( string input, T answer) 
+        protected void RunSampleTestB<T>(string input, T answer)
         {
             T ans = (T)Puzzle.SolvePuzzleB(input);
             Assert.That(ans, Is.EqualTo(answer));
         }
+
+
 
 
     }

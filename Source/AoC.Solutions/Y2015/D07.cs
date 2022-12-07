@@ -8,7 +8,7 @@
 
         public override object SolvePuzzleA(string input)
         {
-            return EvaluateRow("a", LoadInstructions(input.Split("\r\n")));
+            return (int)EvaluateRow("a", LoadInstructions(input.Split("\r\n")));
         }
 
         public override object SolvePuzzleB(string input)
@@ -18,7 +18,7 @@
 
             bitwiseInstructions["b"] = new string[] { "" + value, "->", "b" };
 
-            return EvaluateRow("a", bitwiseInstructions);
+            return (int)EvaluateRow("a", bitwiseInstructions);
         }
 
         private static Dictionary<string, string[]> LoadInstructions(IEnumerable<string> input)

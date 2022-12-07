@@ -11,20 +11,21 @@ namespace Aoc.Tests.Y2015
     public class Day07 : DefaultTestAoCDay
     {
 
-        public Day07() : base(File.ReadAllText("Inputs\\Y2015D07.txt")) { }
+        public Day07() : base(new AoC.Solutions.Y2015.D07()) { }
 
-        public override void Setup()
-        {
-            Puzzle = new AoC.Solutions.Y2015.D07();
-        }
+        public override void Setup() { }
 
         [Test]
         public override void SampleTestA()
-        { }
+        {
+            RunSampleTestA(SampleInput, 65079);
+        }
 
         [Test]
         public override void SampleTestB()
-        { }
+        {
+            RunSampleTestB(SampleInput, 65079); 
+        }
 
     }
 }

@@ -10,23 +10,20 @@ namespace Aoc.Tests.Y2022
     public class Day07 : DefaultTestAoCDay
     {
 
-        public Day07() : base(File.ReadAllText("Inputs\\Y2022D07.txt")) { }
+        public Day07() : base(new AoC.Solutions.Y2022.D07()) { }
 
-        public override void Setup()
-        {
-            Puzzle = new AoC.Solutions.Y2022.D07();
-        }
+        public override void Setup() { }
 
         [Test]
         public override void SampleTestA()
         {
-            //RunSampleTestA(Puzzle, "bvwbjplbgvbhsrlpgdmjqwftvncz", 5);
+            RunSampleTestA(SampleInput, 95437);
         }
 
         [Test]
         public override void SampleTestB()
         {
-            //RunSampleTestB(Puzzle, "mjqjpqmgbljsphdztnvjfqwrcgsmlb", 19);
+            RunSampleTestB(SampleInput, 24933642);
         }
     }
 }
