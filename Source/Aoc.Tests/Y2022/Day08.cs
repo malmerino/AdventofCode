@@ -23,7 +23,7 @@ namespace Aoc.Tests.Y2022
         [Test]
         public override void SampleTestB()
         {
-            RunSampleTestB(SampleInput, 0);
+            RunSampleTestB(SampleInput, 8);
         }
     }
 }
