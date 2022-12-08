@@ -5,7 +5,7 @@ namespace AoC.Solutions.Y2022
     public class D08 : AoCPuzzle
     {
         public D08() : base(2022, 08) { }
-        
+
         public override object SolvePuzzleA(string input)
         {
             int[,] map = GenerateMap(input);
@@ -18,6 +18,7 @@ namespace AoC.Solutions.Y2022
             return GetBestScenicScore(map);
         }
         
+
         private static int[,] GenerateMap(string input)
         {
             string[] rows = input.Split("\r\n");
@@ -77,61 +78,31 @@ namespace AoC.Solutions.Y2022
             int xLen = input.GetLength(1);
 
             int down = 0;
-            int up = 0;
-            int left = 0;
-            int right = 0;
-
-
             for (int i = y + 1; i < yLen; i++)
             {
-                if (input[i, x] < val)
-                {
-                    down++;
-                }
-                else
-                {
-                    down++;
-                    break;
-                }
-            }
-            
-            for (int i = y - 1; i >= 0; i--)
-            {
-                if (input[i, x] < val)
-                {
-                    up++;
-                }
-                else
-                {
-                    up++;
-                    break;
-                }
-            }
-            
-            for (int i = x + 1; i < xLen; i++)
-            {
-                if (input[y, i] < val)
-                {
-                    right++;
-                }
-                else
-                {
-                    right++;
-                    break;
-                }
+                down++;
+                if (input[i, x] >= val) break;
             }
 
+            int up = 0;
+            for (int i = y - 1; i >= 0; i--)
+            {
+                up++;
+                if (input[i, x] >= val) break;
+            }
+
+            int right = 0;
+            for (int i = x + 1; i < xLen; i++)
+            {
+                right++;
+                if (input[y, i] >= val) break;
+            }
+
+            int left = 0;
             for (int i = x - 1; i >= 0; i--)
             {
-                if (input[y, i] < val)
-                {
-                    left++;
-                }
-                else
-                {
-                    left++;
-                    break;
-                }
+                left++;
+                if (input[y, i] >= val) break;
             }
 
 
@@ -165,7 +136,6 @@ namespace AoC.Solutions.Y2022
 
             return upOk || downOk || rightOk || leftOk;
         }
-
 
     }
 }
