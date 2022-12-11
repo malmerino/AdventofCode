@@ -17,7 +17,7 @@ namespace AoC.Solutions.Y2022
             int[,] map = GenerateMap(input);
             return GetBestScenicScore(map);
         }
-        
+
 
         private static int[,] GenerateMap(string input)
         {
@@ -45,7 +45,7 @@ namespace AoC.Solutions.Y2022
             {
                 for (int x = 0; x < input.GetLength(1); x++)
                 {
-                    if (OutsideTreesVisible(input, x, y)) visible++;
+                    if (GetEvaluationResult(input, x, y).CanBeSeenFromOutside) visible++;
                 }
             }
 
@@ -60,7 +60,7 @@ namespace AoC.Solutions.Y2022
             {
                 for (int x = 0; x < input.GetLength(1); x++)
                 {
-                    int scenicScore = GetScenicScore(input, x, y);
+                    int scenicScore = GetEvaluationResult(input, x, y).SceneryScore;
 
                     if (scenicScore > bestScore) bestScore = scenicScore;
                 }
@@ -69,73 +69,62 @@ namespace AoC.Solutions.Y2022
             return bestScore;
         }
 
-
-        private static int GetScenicScore(int[,] input, int x, int y)
+        private static EvaluationResult GetEvaluationResult(int[,] map, int x, int y)
         {
-            int val = input[y, x];
+            int yLen = map.GetLength(0);
+            int xLen = map.GetLength(1);
+            int val = map[y, x];
 
-            int yLen = input.GetLength(0);
-            int xLen = input.GetLength(1);
+            int[] score = new int[CommonDirections.Length];
+            int index = 0;
 
-            int down = 0;
-            for (int i = y + 1; i < yLen; i++)
+            bool canBeSeen = false;
+
+            foreach (Direction direction in CommonDirections)
             {
-                down++;
-                if (input[i, x] >= val) break;
+                int i = 1;
+                while (true)
+                {
+                    int dX = x + direction.Dx * i;
+                    int dY = y + direction.Dy * i;
+
+                    if (x == 0 || y == 0 || x == xLen - 1 || y == yLen - 1)
+                    {
+                        score[index++] = 0;
+                        canBeSeen = true;
+                        break;
+                    }
+
+
+                    if (dX < 0 || dY < 0 || dX >= xLen || dY >= yLen)
+                    {
+                        score[index++] = i - 1;
+                        canBeSeen = true;
+                        break;
+                    }
+
+                    if (map[dY, dX] >= val)
+                    {
+                        score[index++] = i;
+                        break;
+                    }
+
+                    i++;
+                }
             }
 
-            int up = 0;
-            for (int i = y - 1; i >= 0; i--)
-            {
-                up++;
-                if (input[i, x] >= val) break;
-            }
-
-            int right = 0;
-            for (int i = x + 1; i < xLen; i++)
-            {
-                right++;
-                if (input[y, i] >= val) break;
-            }
-
-            int left = 0;
-            for (int i = x - 1; i >= 0; i--)
-            {
-                left++;
-                if (input[y, i] >= val) break;
-            }
-
-
-            return down * up * right * left;
-
+            return new EvaluationResult(score.Aggregate(1, (sum, add) => sum * add), canBeSeen);
         }
 
-        private static bool OutsideTreesVisible(int[,] input, int x, int y)
-        {
-            int val = input[y, x];
+        private record EvaluationResult(int SceneryScore, bool CanBeSeenFromOutside);
 
-            int yLen = input.GetLength(0);
-            int xLen = input.GetLength(1);
+        private record Direction(int Dx, int Dy);
 
-
-            bool downOk = true;
-            for (int i = y + 1; i < yLen; i++)
-                if (input[i, x] >= val) downOk = false;
-
-            bool upOk = true;
-            for (int i = y - 1; i >= 0; i--)
-                if (input[i, x] >= val) upOk = false;
-
-            bool rightOk = true;
-            for (int i = x + 1; i < xLen; i++)
-                if (input[y, i] >= val) rightOk = false;
-
-            bool leftOk = true;
-            for (int i = x - 1; i >= 0; i--)
-                if (input[y, i] >= val) leftOk = false;
-
-            return upOk || downOk || rightOk || leftOk;
-        }
-
+        private static readonly Direction[] CommonDirections = {
+            new(1, 0),
+            new(-1, 0),
+            new(0, 1),
+            new(0, -1),
+        };
     }
 }
