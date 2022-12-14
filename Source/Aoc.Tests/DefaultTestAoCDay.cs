@@ -16,7 +16,7 @@ namespace Aoc.Tests
         protected DefaultTestAoCDay(string content, string sampleInput = "")
         {
             FileContent = content;
-            SampleInput = sampleInput;
+            SampleInputA = SampleInputB = sampleInput;
         }
 
         protected DefaultTestAoCDay(AoCPuzzle puzzle)
@@ -28,13 +28,26 @@ namespace Aoc.Tests
 
             FileContent = File.ReadAllText(pathFileContent);
 
-            if (File.Exists(sampleFileContent))
-                SampleInput = File.ReadAllText(sampleFileContent);
+            if (!File.Exists(sampleFileContent)) return;
+
+            string input = File.ReadAllText(sampleFileContent);
+
+            if (input.Contains("[Split]"))
+            {
+	            string[] inputs = input.Split("[Split]");
+	            SampleInputA = inputs[0];
+	            SampleInputB = inputs[1];
+
+            }
+            else
+            {
+	            SampleInputA = SampleInputB = input;
+            }
 
         }
 
-        public string FileContent { get; protected set; }
-        public AoCPuzzle Puzzle { get; protected set; }
+        private string FileContent { get; set; }
+        protected AoCPuzzle Puzzle { get; set; }
 
         [SetUp]
         public abstract void Setup();
@@ -49,7 +62,8 @@ namespace Aoc.Tests
         [Test]
         public void RealTest() => AoCPuzzle.SolveVerbose(Puzzle, FileContent);
 
-        protected string SampleInput { get; set; }
+        protected string SampleInputA { get; set; }
+        protected string SampleInputB { get; set; }
 
 
         protected void RunSampleTestA<T>(string input, T answer)
