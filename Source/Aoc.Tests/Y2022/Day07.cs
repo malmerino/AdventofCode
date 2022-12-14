@@ -17,13 +17,13 @@ namespace Aoc.Tests.Y2022
         [Test]
         public override void SampleTestA()
         {
-            RunSampleTestA(SampleInput, 95437);
+            RunSampleTestA(SampleInputA, 95437);
         }
 
         [Test]
         public override void SampleTestB()
         {
-            RunSampleTestB(SampleInput, 24933642);
+            RunSampleTestB(SampleInputB, 24933642);
         }
     }
 }
